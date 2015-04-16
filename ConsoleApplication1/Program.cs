@@ -29,7 +29,6 @@ namespace ConsoleApplication1
 
         public static void StartGame()
         {
-            Console.WriteLine("Typ exit om te stoppen met TicTacToe");
             Console.WriteLine("TicTacToe begint");
             Console.WriteLine(board);
             Turn();
@@ -57,7 +56,16 @@ namespace ConsoleApplication1
                     Console.WriteLine(board);
                     status = ChangeStatus(status);
                     result = false;
-                    Turn();
+                    if (TicTacToeEngine.TictacToeEngine.CheckWinner())
+                    {
+                        Console.WriteLine("Gewonnen!");
+                        Console.WriteLine("Typ reset om een nieuw spel te starten");
+                        string playerinput = Console.ReadLine();
+                        checkReset(playerinput);
+                    }
+                    else {
+                        Turn();
+                    }
 
                 }
                 else
@@ -68,13 +76,18 @@ namespace ConsoleApplication1
             }
         }
 
-        public static void CheckResult()
+       public static void checkReset(string input)
         {
-            if (result)
-            {
-                Console.WriteLine("Hier moet ");
+            if(input == "reset"){
+                Console.WriteLine("Bord wordt geleegd");
+                TicTacToeEngine.TictacToeEngine.Reset();
+                board = UpdateBoard();
+                Console.WriteLine("Nieuw spel wordt gestart");
+                StartGame();
             }
         }
+
+      
 
         public static GameStatus ChangeStatus(GameStatus turn)
         {

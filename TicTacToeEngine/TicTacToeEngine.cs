@@ -36,33 +36,13 @@ namespace TicTacToeEngine
             {
                 return true;
             }
-            return false;
-           /* if (!boardposition[position].Equals('X') || !boardposition[position].Equals('O'))
-            {
-                Console.WriteLine("Veld is leeg");
-                return true;
-            }
-            if(boardposition[position].Equals('X') || boardposition[position].Equals('O'))
-            {
-                Console.WriteLine("Er staat al een X of een O");
-                return false;
-            }*/
-            //return false;
-            /*i = i - 1;
-            if (boardposition[i] != null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }*/
-            
+            return false;         
         }
 
         public static void Reset()
         {
-            Array.Clear(boardposition, 9, boardposition.Length);
+            
+            Array.Clear(boardposition,0, boardposition.Length);
         }
 
         public static string Board()
@@ -89,35 +69,43 @@ namespace TicTacToeEngine
                 boardposition[i] = 'X';
                 //Console.WriteLine(boardposition[i]);
             }
-           /* Console.WriteLine(i);
-            string statusString = "OX";
-            char O = statusString[0];
-            char X = statusString[1];
-
-            if (status == GameStatus.PlayerOPlays)
-            {
-                boardposition[i] = 'O';
-            }
-            else if (status == GameStatus.PlayerXPlays)
-            {
-                boardposition[i] = X;
-            }
         }
 
+        public Boolean bepaalWinnaar(char a, char b, char c)
+        {
+            if((a.Equals(b)) && a.Equals(c)) && !a == "")
+
+                )
+        }
         public static bool CheckWinner()
         {
-            if ((boardposition[0] == boardposition[1] && boardposition[0] == boardposition[2])
-                || (boardposition[0] == boardposition[3] && boardposition[0] == boardposition[6])
-                || (boardposition[0] == boardposition[4] && boardposition[0] == boardposition[8])
-                || (boardposition[1] == boardposition[4] && boardposition[1] == boardposition[7])
-                || (boardposition[2] == boardposition[4] && boardposition[2] == boardposition[6])
-                || (boardposition[2] == boardposition[5] && boardposition[2] == boardposition[8])
-                || (boardposition[3] == boardposition[4] && boardposition[3] == boardposition[5])
-                || (boardposition[6] == boardposition[7] && boardposition[6] == boardposition[8]))
+
+            /*if((boardposition[0].Equals(boardposition[1]) && boardposition[2].Equals(boardposition[0]) && boardposition[0]!= null))
             {
+
                 return true;
             }
             return false;*/
+           /* if ((boardposition[0] == 'X' && boardposition[1] == 'X' && boardposition[2] == 'X' )||
+            
+               (boardposition[0] == 'O' && boardposition[1] == 'O' && boardposition[2] == 'O'))
+            {
+                
+                return true;
+            }
+            return false;*/
+            /* if ((boardposition[0] == boardposition[1] && boardposition[0] == boardposition[2] && boardposition[0] != null)
+                 || (boardposition[0] == boardposition[3] && boardposition[0] == boardposition[6] && boardposition[0] != null)
+                 || (boardposition[0] == boardposition[4] && boardposition[0] == boardposition[8] && boardposition[0] != null)
+                 || (boardposition[1] == boardposition[4] && boardposition[1] == boardposition[7] && boardposition[1] != null)
+                 || (boardposition[2] == boardposition[4] && boardposition[2] == boardposition[6] && boardposition[2] != null)
+                 || (boardposition[2] == boardposition[5] && boardposition[2] == boardposition[8] && boardposition[2] != null)
+                 || (boardposition[3] == boardposition[4] && boardposition[3] == boardposition[5] && boardposition[3] != null)
+                 || (boardposition[6] == boardposition[7] && boardposition[6] == boardposition[8] && boardposition[6] != null))
+             {
+                 return true;
+             }
+             return false;*/
         }
 
         public static bool CheckEqual()
