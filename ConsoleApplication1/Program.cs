@@ -14,25 +14,20 @@ namespace ConsoleApplication1
         public const string kiesVak = "Kies een vak (1-9)";
         public static bool result = false;
         public static int input;
-        //   public static int countTurns;
+        public static int countTurns;
         static void Main(string[] args)
         {
 
             StartGame();
             Console.ReadKey();
-            /*string line = Console.ReadLine();
-            while (!line.Equals("exit"))
-            {
-                //  Turn();
-            }*/
         }
 
+        // starten van het spel
         public static void StartGame()
         {
             Console.WriteLine("TicTacToe begint");
-            Console.WriteLine(board);
-            Turn();
-
+            Console.WriteLine(board); // board laten zien
+            Turn(); // eerste beurt
         }
 
         public static void Turn()
@@ -40,22 +35,26 @@ namespace ConsoleApplication1
             Console.WriteLine(status); 
             Console.WriteLine(kiesVak);
             input = GetPlayerInput(); 
+            // checken of er een geldig getal is in gevoerd
             if (input < 1 || input > 9)
             {
-                Console.WriteLine("Ongeldig getal");
+                Console.WriteLine("Ongeldig getal"); // bij ongeldig getal begint de beurt opnieuw
                 Turn();
             }
             else
             {
-                result = TicTacToeEngine.TictacToeEngine.ChooseCell(input);
-                Console.WriteLine(result);
+                // als er een geldig getal is ingevoerd, kijk dan of de cell al bezet is of niet
+                result = TicTacToeEngine.TictacToeEngine.ChooseCell(input); 
+                
+                // als de cel nog niet bezet is dan vul de cel in
                 if (result)
                 {
-                    TicTacToeEngine.TictacToeEngine.SetCell(input, status);
-                    board = UpdateBoard();
-                    Console.WriteLine(board);
+                    TicTacToeEngine.TictacToeEngine.SetCell(input, status); // cel invullen 
+                    board = UpdateBoard(); 
+                    Console.WriteLine(board);// board opnieuw tonen
                     status = ChangeStatus(status);
                     result = false;
+                    // kijk of er is gewonnen
                     if (TicTacToeEngine.TictacToeEngine.CheckWinner())
                     {
                         Console.WriteLine("Gewonnen!");
@@ -63,8 +62,19 @@ namespace ConsoleApplication1
                         string playerinput = Console.ReadLine();
                         checkReset(playerinput);
                     }
+                    if (TicTacToeEngine.TictacToeEngine.CheckEqual())
+                    {
+                        Console.WriteLine("Gelijkspel !");
+                        Console.WriteLine("Typ reset om een nieuw spel te starten");
+                        string playerinput = Console.ReadLine();
+                        checkReset(playerinput);
+                    }
+
                     else {
+                        countTurns++;
+                        Console.WriteLine("Beurtnummer:" + countTurns);
                         Turn();
+
                     }
 
                 }
