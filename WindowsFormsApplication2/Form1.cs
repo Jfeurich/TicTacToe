@@ -13,57 +13,78 @@ namespace WindowsFormsApplication2
 {
     public partial class BoterKaasEnEieren : Form
     {
-        GameStatus status = GameStatus.PlayerOPlays;
-        string board = TicTacToeEngine.TictacToeEngine.Board(); 
+        public static  GameStatus status = GameStatus.PlayerOPlays;
+        public static TictacToeEngine tte = new TictacToeEngine();
+        public static int beurt;
+
         public BoterKaasEnEieren()
         {
             InitializeComponent();
-            Console.WriteLine("Test");
+           
         }
 
         private void button_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine(board);
-          
+        {          
             // tictactoe engine aanroepen
             Button button = sender as Button;
             int tabindex = button.TabIndex;
-
-            if (TicTacToeEngine.TictacToeEngine.ChooseCell(tabindex))
-            {
-                TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
-                if (TicTacToeEngine.TictacToeEngine.CheckWinner())
-                {
-                    if (status == GameStatus.PlayerOPlays)
-                    {
-                        status = GameStatus.PlayerOWins;
-                    }
-                    else if (status == GameStatus.PlayerXPlays)
-                    {
-                        status = GameStatus.PlayerXWins;
-                    }
-                    Console.WriteLine(status);
-                }
-                else if (TicTacToeEngine.TictacToeEngine.CheckEqual())
-                {
-                    status = GameStatus.Equal;
-                    Console.WriteLine(status);
-                  
-                }
-                else
-                {
-                    if (status == GameStatus.PlayerOPlays)
-                    {
-                        status = GameStatus.PlayerXPlays;
-                    }
-                    else if (status == GameStatus.PlayerXPlays)
-                    {
-                        status = GameStatus.PlayerOPlays;
-                    }
-                }
-            }
-
+            checkCell(tabindex, sender);
         }
 
+        public static void checkCell(int tabindex, object sender)
+        {
+            tabindex++;
+            Button b = sender as Button;
+            switch (status)
+            {
+                case GameStatus.PlayerOPlays:
+                    b.Text = "O";
+                    b.Enabled = false;
+                    status = GameStatus.PlayerXPlays;
+                    beurt++;
+                    System.Windows.Forms.MessageBox.Show("" + tabindex);
+                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
+                    if (TicTacToeEngine.TictacToeEngine.CheckWinner())
+                    {
+
+                        System.Windows.Forms.MessageBox.Show(" O heeft GEWONNEN");
+                        TicTacToeEngine.TictacToeEngine.Reset();
+                        ResetForm();
+
+                    }
+                    else
+                    {
+                        if (TicTacToeEngine.TictacToeEngine.CheckEqual())
+                        {
+                            System.Windows.Forms.MessageBox.Show("Gelijk spel");
+                            TicTacToeEngine.TictacToeEngine.Reset();
+                            ResetForm();
+
+                        }
+                    }
+                    break;
+
+                case GameStatus.PlayerXPlays:
+                    b.Text = "X";
+                    b.Enabled = false;
+                    status = GameStatus.PlayerOPlays;
+                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
+                    System.Windows.Forms.MessageBox.Show("" + tabindex);
+                    beurt++;
+                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
+                    if (TicTacToeEngine.TictacToeEngine.CheckWinner())
+                    {
+                        System.Windows.Forms.MessageBox.Show(" X heeft GEWONNEN");
+                        TicTacToeEngine.TictacToeEngine.Reset();
+                        ResetForm();
+                    }
+                    break;
+            }        
+        }
+
+        public static void ResetForm()
+        {
+            Application.Restart();          
+        }
     }
 }

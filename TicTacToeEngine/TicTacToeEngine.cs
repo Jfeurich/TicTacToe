@@ -67,6 +67,7 @@ namespace TicTacToeEngine
                 boardposition[i] = 'X';
             }
         }
+       
 
         public static Boolean BepaalWinnaar(char a, char b, char c)
         {
@@ -74,7 +75,6 @@ namespace TicTacToeEngine
                 return true;
             }
             return false;
-
         }
 
         public static bool CheckWinner()
