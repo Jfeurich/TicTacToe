@@ -20,40 +20,39 @@ namespace TicTacToeEngine
                 System.Console.WriteLine("Onbekend getal ingevuld");
                 return false;
                 }
-            else if (boardposition[position].Equals('O') || boardposition[position].Equals('X')) {
+            else if (boardposition[position].Equals('O') || boardposition[position].Equals('X')){
                 return false;
                 }
             else {
                 //hier wordt de zet gedaan, na de zet wordt de status aangepast 
                 // en gecontroleerd of er een winnaar is.
-
                 if (status == GameStatus.PlayerOPlays) {
                     boardposition[position] = 'O';
-                    if (!CheckWinner()) {
+                    if (CheckEqual()) {
+                        status = GameStatus.Equal;
+                        }
+                    else if (!CheckWinner()) {
                         status = GameStatus.PlayerXPlays;
                         }
                     else if (CheckWinner()) {
                         status = GameStatus.PlayerOWins;
                         }
-                    else if (CheckEqual()) {
+                     
+                    }
+                else if (status == GameStatus.PlayerXPlays) {
+                    boardposition[position] = 'X';
+                    if (CheckEqual()) {
                         status = GameStatus.Equal;
                         }
-                    }
-                    else if (status == GameStatus.PlayerXPlays) {
-                        boardposition[position] = 'X';
-                        if (!CheckWinner()) {
-                            status = GameStatus.PlayerOPlays;
-                            }
-                        else if (CheckWinner()) {
-                            status = GameStatus.PlayerXWins;
-                            }
-                        else if (CheckEqual()) {
-                            status = GameStatus.Equal;
-                            }
+                    if (!CheckWinner()) {
+                        status = GameStatus.PlayerOPlays;
                         }
+                    else if (CheckWinner()) {
+                        status = GameStatus.PlayerXWins;
+                        }
+                    }   
                     return true;
                     }
-                 return false;
              }
             
 

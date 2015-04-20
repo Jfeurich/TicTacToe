@@ -26,7 +26,7 @@ namespace WindowsFormsApplication2
         private void button_Click(object sender, EventArgs e) {
             // tictactoe engine aanroepen
             Button button = sender as Button;
-            int tabindex = button.TabIndex++;
+            int tabindex = button.TabIndex;
             
             // Op het moment dat er op een knop gedrukt wordt: Controleer de gamestatus
             // Aan de hand van de gamestatus verander de knop etc.
