@@ -9,39 +9,58 @@ namespace TicTacToeEngine
     public enum GameStatus { PlayerOPlays, PlayerXPlays, Equal, PlayerOWins, PlayerXWins }
 
 
-    public class TictacToeEngine
-    {
-        // array aanmaken met 9 plaatsen
-
-        public GameStatus status { get; set; }
+    public class TictacToeEngine{
+        public static GameStatus status { get; set; }
         public static char[] boardposition = new char[9];
-
         public static string board;
-       
-        public static bool ChooseCell(int i)
-        {
-            int position = i - 1;
 
-            if (position > boardposition.Length)
-            {
+        public static bool SetCell(int i) {
+            int position = i;
+            if (position > boardposition.Length) {
                 System.Console.WriteLine("Onbekend getal ingevuld");
                 return false;
-            }
-            else if (boardposition[position].Equals('O') || boardposition[position].Equals('X'))
-            {
+                }
+            else if (boardposition[position].Equals('O') || boardposition[position].Equals('X')) {
                 return false;
-            }
-            else
-            {
-                return true;
-            }
-            return false;         
-        }
+                }
+            else {
+                //hier wordt de zet gedaan, na de zet wordt de status aangepast 
+                // en gecontroleerd of er een winnaar is.
+
+                if (status == GameStatus.PlayerOPlays) {
+                    boardposition[position] = 'O';
+                    if (!CheckWinner()) {
+                        status = GameStatus.PlayerXPlays;
+                        }
+                    else if (CheckWinner()) {
+                        status = GameStatus.PlayerOWins;
+                        }
+                    else if (CheckEqual()) {
+                        status = GameStatus.Equal;
+                        }
+                    }
+                    else if (status == GameStatus.PlayerXPlays) {
+                        boardposition[position] = 'X';
+                        if (!CheckWinner()) {
+                            status = GameStatus.PlayerOPlays;
+                            }
+                        else if (CheckWinner()) {
+                            status = GameStatus.PlayerXWins;
+                            }
+                        else if (CheckEqual()) {
+                            status = GameStatus.Equal;
+                            }
+                        }
+                    return true;
+                    }
+                 return false;
+             }
+            
 
         public static void Reset()
-        {
-            
+        {        
             Array.Clear(boardposition,0, boardposition.Length);
+            status = GameStatus.PlayerOPlays;
         }
 
         public static string Board()
@@ -54,20 +73,6 @@ namespace TicTacToeEngine
                 "-------------";
             return board;
         }
-
-        public static void SetCell(int i, GameStatus status)
-        {
-            i = i - 1;
-            if (status == GameStatus.PlayerOPlays)
-            {
-                boardposition[i] = 'O'; 
-            }
-            if (status == GameStatus.PlayerXPlays)
-            {
-                boardposition[i] = 'X';
-            }
-        }
-       
 
         public static Boolean BepaalWinnaar(char a, char b, char c)
         {

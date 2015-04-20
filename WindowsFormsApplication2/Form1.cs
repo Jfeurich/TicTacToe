@@ -23,68 +23,30 @@ namespace WindowsFormsApplication2
            
         }
 
-        private void button_Click(object sender, EventArgs e)
-        {          
+        private void button_Click(object sender, EventArgs e) {
             // tictactoe engine aanroepen
             Button button = sender as Button;
-            int tabindex = button.TabIndex;
-            checkCell(tabindex, sender);
-        }
-
-        public static void checkCell(int tabindex, object sender)
-        {
-            tabindex++;
-            Button b = sender as Button;
-            switch (status)
-            {
-                case GameStatus.PlayerOPlays:
-                    b.Text = "O";
-                    b.Enabled = false;
-                    status = GameStatus.PlayerXPlays;
-                    beurt++;
-                    System.Windows.Forms.MessageBox.Show("" + tabindex);
-                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
-                    if (TicTacToeEngine.TictacToeEngine.CheckWinner())
-                    {
-
-                        System.Windows.Forms.MessageBox.Show(" O heeft GEWONNEN");
-                        TicTacToeEngine.TictacToeEngine.Reset();
-                        ResetForm();
-
-                    }
-                    else
-                    {
-                        if (TicTacToeEngine.TictacToeEngine.CheckEqual())
-                        {
-                            System.Windows.Forms.MessageBox.Show("Gelijk spel");
-                            TicTacToeEngine.TictacToeEngine.Reset();
-                            ResetForm();
-
-                        }
-                    }
-                    break;
-
-                case GameStatus.PlayerXPlays:
-                    b.Text = "X";
-                    b.Enabled = false;
-                    status = GameStatus.PlayerOPlays;
-                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
-                    System.Windows.Forms.MessageBox.Show("" + tabindex);
-                    beurt++;
-                    TicTacToeEngine.TictacToeEngine.SetCell(tabindex, status);
-                    if (TicTacToeEngine.TictacToeEngine.CheckWinner())
-                    {
-                        System.Windows.Forms.MessageBox.Show(" X heeft GEWONNEN");
-                        TicTacToeEngine.TictacToeEngine.Reset();
-                        ResetForm();
-                    }
-                    break;
-            }        
-        }
-
-        public static void ResetForm()
-        {
-            Application.Restart();          
+            int tabindex = button.TabIndex++;
+            
+            // Op het moment dat er op een knop gedrukt wordt: Controleer de gamestatus
+            // Aan de hand van de gamestatus verander de knop etc.
+            // Op het moment dat  de Gamestatus Win of Equal retourneert, genereer boodschap en reset.
+         if (TicTacToeEngine.TictacToeEngine.SetCell(tabindex)) {
+                 switch (TicTacToeEngine.TictacToeEngine.status) {
+                        case GameStatus.PlayerXPlays: button.Text = "O"; button.Enabled = false; ; break;
+                        case GameStatus.PlayerOPlays: button.Text = "X"; button.Enabled = false; ; break;
+                        case GameStatus.PlayerOWins: System.Windows.Forms.MessageBox.Show("O wint"); ResetForm(); break;
+                        case GameStatus.PlayerXWins: System.Windows.Forms.MessageBox.Show("X wint"); ResetForm(); break;
+                        case GameStatus.Equal: System.Windows.Forms.MessageBox.Show("Gelijkspel"); ResetForm(); break;
+                    } 
+                }      
+            }
+        public void ResetForm(){
+        foreach (Control c in Controls) {
+            c.Enabled = true;
+            c.Text = "";
+            TicTacToeEngine.TictacToeEngine.Reset();
+            }         
         }
     }
 }
